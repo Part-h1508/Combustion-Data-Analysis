@@ -1,48 +1,57 @@
+# restarting
+ 
+
+# variables for rows and columns
+main_file = "Data details.xlsx"
+air_name = "Air (SLPM)"
+
+# importing libraries
 import pandas as pd
+import time
 
-# 1. Load your main summary data
-# (Make sure this filename matches your actual CSV file exactly)
-df_summary = pd.read_csv("Data details.xlsx - Sheet1.csv")
+# opening the main data file
+df = pd.read_excel(main_file)
 
-# Create an empty list to store the calculated NRMS values
-nrms_list = []
 
-# 2. Loop through every row in the summary data
-for index, row in df_summary.iterrows():
+# creating an empty list to store the calculated NRMS values
+NV = []
+
+# now we loop thru every row and column in the table
+for index, row in df.iterrows():
+    air_value = row[air_name]
+
+    # creating the file name for the current row based on the 'Air (SLPM)' value
+    file_name = str(int(air_value)) + ".xlsx"
+
+    # now we open the file with the air value
+    df1 = pd.read_excel(file_name, header=None, names=['Time', 'Amplitude'])
     
-    # Get the Air SLPM value to figure out the file name (e.g., 65.0 -> '65')
-    air_flow = int(row['Air (SLPM)'])
-    filename = f"{air_flow}.xlsx"
-    
-    try:
-        print(f"Opening {filename}...")
-        
-        # 3. Read the specific CH amplitude file
-        # Using header=None and names as we figured out earlier to fix the column issue
-        df_ch = pd.read_excel(filename, header=None, names=['Time', 'Amplitude'])
-        
-        # 4. Calculate Mean and Standard Deviation for the 'Amplitude' column
-        mean_ch = df_ch['Amplitude'].mean()
-        std_ch = df_ch['Amplitude'].std()
-        
-        # 5. Calculate NRMS (Standard Deviation divided by the Mean)
-        nrms = std_ch / mean_ch
-        
-        # Add it to our list
-        nrms_list.append(nrms)
-        print(f"  -> Calculated NRMS: {nrms:.4f}")
-        
-    except FileNotFoundError:
-        print(f"  -> ERROR: Could not find {filename}. Skipping...")
-        nrms_list.append(None) # Put a blank if the file is missing
+    # now we calculate the mean for amplitudes
+    # this mean represents q_bar in the equation.
+    mean_amplitude = df1['Amplitude'].mean()
 
-# 6. Add the new NRMS list as a brand new column in your main summary table
-df_summary['Calculated_NRMS'] = nrms_list
+    # now we calculat the standard deviation for the amplitudes
+    # std represents the sigma in equation
+    std_amplitude = df1['Amplitude'].std()
 
-# 7. Print a preview of the final combined table
-print("\n--- Final Data with NRMS ---")
-print(df_summary[['Air (SLPM)', 'Equivalence ratio', 'Fi/FI_LBO', 'Calculated_NRMS']])
+    # now calculat NRMS by using the formula: NRMS = (sigma / q_bar)
+    if mean_amplitude != 0:
+        nrms = std_amplitude / mean_amplitude
 
-# 8. Save the new complete table to a new CSV file
-df_summary.to_csv("Final_Data_with_NRMS.csv", index=False)
-print("\nSaved everything to 'Final_Data_with_NRMS.csv'")
+    else:
+        nrms = 0 
+    # we use a for loop because if mean amplitude is zero, 
+    # the flmae is either blown out or sensor is not working
+    # avoiding divide by zero error, we set the nrms value to zero.
+
+    # append the calculated NRMS value to the list
+    NV.append(nrms)
+    print(NV)
+
+# now we create a new data frame
+new_table = pd.DataFrame({
+    "Air (SLPM)": df[air_name],
+    "NRMS": NV
+ })
+
+new_table.to_excel("NRMS_values.xlsx", index=False)
