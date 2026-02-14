@@ -1,0 +1,8 @@
+# Ignore all Excel files (your 40,000 row data files)
+*.xlsx
+
+# Ignore all CSV files (your summary sheets)
+*.csv
+
+# Ignore Python background cache folders
+__pycache__/
