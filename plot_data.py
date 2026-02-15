@@ -6,16 +6,18 @@ import pandas as pd
 main_file = "Data details.xlsx"
 nrms_file = "NRMS_values.xlsx"
 
-
-# we take Fi/FI data from Data details.xlsx file and plot on X axis
-# we take NRMS values from NRMS_values.xlsx file and plot on Y axis
 df = pd.read_excel(main_file)
 df1 = pd.read_excel(nrms_file)
 
-# plot the data
-plt.plot(df['Air (SLPM)'], df1['NRMS'], marker='o')
-plt.xlabel('Air (SLPM)')
+# Plot using Fi/FI_LBO on the x-axis 
+plt.plot(df['Fi/FI_LBO'], df1['NRMS'], marker='o')
+
+# Invert the X-axis to match the paper's layout (values decreasing from right to left)
+plt.gca().invert_xaxis()
+
+# plotting the values
+plt.xlabel('$\Phi / \Phi_{lbo}$')
 plt.ylabel('NRMS')
-plt.title('NRMS vs Air (SLPM)')
+plt.title('NRMS vs Normalized Equivalence Ratio')
 plt.grid(True)
 plt.show()
