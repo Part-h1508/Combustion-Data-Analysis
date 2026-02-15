@@ -12,9 +12,6 @@ df1 = pd.read_excel(nrms_file)
 # Plot using Fi/FI_LBO on the x-axis 
 plt.plot(df['Fi/FI_LBO'], df1['NRMS'], marker='o')
 
-# Invert the X-axis to match the paper's layout (values decreasing from right to left)
-plt.gca().invert_xaxis()
-
 # plotting the values
 plt.xlabel('$\Phi / \Phi_{lbo}$')
 plt.ylabel('NRMS')
