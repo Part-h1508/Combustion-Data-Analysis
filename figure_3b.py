@@ -55,6 +55,6 @@ plt.ylabel('$\zeta$ (Cumulative Energy Fraction)')
 plt.title('Cumulative Energy Fraction vs Frequency')
 plt.grid()
 plt.legend()
-plt.xlim(0, 700)  # Limit x-axis to 5000 Hz for better visualization
+plt.xlim(0, 100)  # Limit x-axis to 5000 Hz for better visualization
 plt.ylim(0, 0.935)  # Limit y-axis to 1 for better visualization
 plt.show()
