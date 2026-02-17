@@ -1,5 +1,5 @@
 """
-In the context of your Thermoacoustic Instability (TAI) research, 
+In the context of our Thermoacoustic Instability (TAI) research, 
 autocorrelation is a fantastic metric. 
 The paper points out that while a stable flame's 
 fluctuations are mostly random noise, 
@@ -38,7 +38,7 @@ for index, row in df.iterrows():
     autocorr_values = [df1['Amplitude'].autocorr(lag=i) for i in range(1, 20)] # calculating autocorrelation for lags from 1 to 20
 
     # creating a nested loop from k=0 to 20.
-    for k in range(1, 20):
+    for k in range(1, 21):
 
         # append the autocorrelation value for the current lag to the list
         ac_vlues.append(autocorr_values[k-1]) # k-1 because the index starts from 0
@@ -54,3 +54,12 @@ plt.title('Autocorrelation of Chemiluminescence Signal')
 plt.legend()
 plt.grid(True)
 plt.show()
+
+"""
+What this graph basically tells us is that
+as we approach blowout, the autocorrelation values increase,
+indicating that the signal becomes more deterministic and less random.
+This is a key insight into the nature of the oscillations near blowout,
+which can help us understand and potentially control thermoacoustic instabilities.
+
+"""
