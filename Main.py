@@ -1,4 +1,5 @@
 # restarting
+# fig 7
  
 
 # variables for rows and columns

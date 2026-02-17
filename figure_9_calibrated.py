@@ -16,7 +16,7 @@ mean voltage --> blowout threshold at 20%
 After some diggin, i found that the Yi and Gutmark
 paper used 20% threshold beacuse that fit the best.
 my graph wasnt looking same so after some hit and trial
-i am stopping it at %
+i am stopping it at 72%
 """
 
 
