@@ -57,4 +57,4 @@ plt.grid()
 plt.legend()
 plt.xlim(0, 100)  # Limit x-axis to 5000 Hz for better visualization
 plt.ylim(0, 0.935)  # Limit y-axis to 1 for better visualization
-plt.show()
+plt.show()  

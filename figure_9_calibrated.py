@@ -47,7 +47,7 @@ for index, row in df.iterrows():
     Q_bar = df1['Amplitude'].mean()
 
     # set the threshold at 20% of the mean amplitude
-    threshold = 0.72 * Q_bar
+    threshold = 0.5  * Q_bar
 
     # count the number of data points below the threshold
     count_below_threshold = (df1['Amplitude'] < threshold).sum()

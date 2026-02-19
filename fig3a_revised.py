@@ -43,6 +43,24 @@ for index, row in df.iterrows():
         # using welch's method to estimate the power spectral density
         frequencies, psd = welch(df1['Amplitude'].to_numpy(), fs=fs, nperseg=4096)
 
+        # finding the amplitude to plot amplitude vs frequency graph
+        amplitude = df1['Amplitude'].to_numpy()
+
+        # plotting the Amplitude vs Frequency graph for the current air value
+        plt.semilogy(frequencies, amplitude, label=f"Air: {air_value} SLPM")
+
+# formatting the plot
+plt.xlabel('Frequency (Hz)')
+plt.ylabel('Chemiluminescence Amplitude (V)')
+plt.title('Chemiluminescence Amplitude vs Frequency')
+# Zooming in on the low frequencies (0 to 500 Hz) where combustion dynamics live
+plt.xlim(0, 500)
+plt.legend()
+plt.grid(True)
+plt.show()
+
+        
+"""
         # plotting the PSD vs Frequency graph for the current air value
         plt.semilogy(frequencies, psd, label=f"Air: {air_value} SLPM")
 
@@ -57,3 +75,4 @@ plt.xlim(0, 500)
 plt.legend()
 plt.grid(True)
 plt.show()
+"""
